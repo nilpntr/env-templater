@@ -2,11 +2,10 @@ package main
 
 import (
 	"log"
-	"os"
 )
 
 func main() {
-	cmd, err := newRootCmd(os.Args[1:])
+	cmd, err := newRootCmd()
 	if err != nil {
 		log.Fatal(err)
 	}

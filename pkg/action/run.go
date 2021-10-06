@@ -8,12 +8,14 @@ import (
 )
 
 type TemplateData struct {
-	Args map[string]string
+	Args      map[string]string
+	ExtraArgs map[string]string
 }
 
 func NewRun(settings *cli.Args) error {
 	envArgs := os.Environ()
 	args := make(map[string]string)
+	extraArgs := make(map[string]string)
 
 	for _, envArg := range envArgs {
 		if strings.HasPrefix(envArg, settings.EnvPrefix) {
@@ -21,8 +23,14 @@ func NewRun(settings *cli.Args) error {
 			args[strings.ReplaceAll(split[0], settings.EnvPrefix, "")] = split[1]
 		}
 	}
+	for _, extraArg := range settings.ExtraArgs {
+		split := strings.Split(extraArg, "=")
+		if len(split) == 2 {
+			extraArgs[split[0]] = split[1]
+		}
+	}
 
-	data := TemplateData{Args: args}
+	data := TemplateData{Args: args, ExtraArgs: extraArgs}
 
 	f, err := os.ReadFile(settings.TemplateFile)
 	if err != nil {

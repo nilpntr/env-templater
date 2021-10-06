@@ -8,10 +8,10 @@ import (
 
 var settings = cli.New()
 
-func newRootCmd(args []string) (*cobra.Command, error) {
+func newRootCmd() (*cobra.Command, error) {
 	cmd := &cobra.Command{
-		Use: "env-templater",
-		Short: "env-templater is a tool to simply create env based templated files",
+		Use:          "env-templater",
+		Short:        "env-templater is a tool to simply create env based templated files",
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			return action.NewRun(settings)
@@ -22,7 +22,6 @@ func newRootCmd(args []string) (*cobra.Command, error) {
 	settings.AddFlags(flags)
 
 	flags.ParseErrorsWhitelist.UnknownFlags = true
-	flags.Parse(args)
 
 	return cmd, nil
 }
