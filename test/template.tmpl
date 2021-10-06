@@ -1,0 +1,3 @@
+{{- range $key, $arg := .Args }}
+{{ $key | to_property }}={{ $arg }}
+{{- end }}
